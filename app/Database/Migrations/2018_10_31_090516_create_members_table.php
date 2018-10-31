@@ -14,6 +14,7 @@ class CreateMembersTable extends Migration
     public function up()
     {
         Schema::create('mail_chimp_members', function (Blueprint $table) {
+            $table->string('id');
             $table->string('email_address');
             $table->string('email_type')->nullable();
             $table->string('status');

@@ -2,17 +2,36 @@
 
 namespace App\Database\Entities\MailChimp;
 
-
+use Doctrine\ORM\Mapping as ORM;
 use EoneoPay\Utils\Str;
 
+/**
+ * @ORM\Entity()
+ */
 class MailChimpMember extends MailChimpEntity
 {
+    /**
+     * @ORM\Id()
+     * @ORM\Column(name="id", type="guid")
+     * @ORM\GeneratedValue(strategy="UUID")
+     *
+     * @var string
+     */
+    private $memberId;
+
     /**
      * @ORM\Column(name="email_address", type="string")
      *
      * @var string
      */
     private $emailAddress;
+
+    /**
+     * @ORM\Column(name="list_id", type="string")
+     *
+     * @var string
+     */
+    private $listId;
 
     /**
      * @ORM\Column(name="email_type", type="string")
@@ -22,7 +41,7 @@ class MailChimpMember extends MailChimpEntity
     private $emailType;
 
     /**
-     * @ORM\Column(name="email_type", type="string")
+     * @ORM\Column(name="status", type="string")
      *
      * @var string
      */
@@ -50,6 +69,22 @@ class MailChimpMember extends MailChimpEntity
     public function setStatus(string $status): void
     {
         $this->status = $status;
+    }
+
+    /**
+     * @param string $memberId
+     */
+    public function setMemberId(string $memberId): void
+    {
+        $this->memberId = $memberId;
+    }
+
+    /**
+     * @param string $listId
+     */
+    public function setListId(string $listId): void
+    {
+        $this->listId = $listId;
     }
 
 
