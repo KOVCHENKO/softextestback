@@ -11,7 +11,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Mailchimp\Mailchimp;
 
 class MemberController extends Controller
 {
@@ -92,7 +91,7 @@ class MemberController extends Controller
 
         if ($member === null) {
             return $this->errorResponse(
-                ['message' => \sprintf('MailChimpList[%s] not found', $memberId)],
+                ['message' => \sprintf('MailChimpMember[%s] not found', $memberId)],
                 404
             );
         }

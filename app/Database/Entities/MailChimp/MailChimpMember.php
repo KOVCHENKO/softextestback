@@ -11,7 +11,7 @@ use EoneoPay\Utils\Str;
 class MailChimpMember extends MailChimpEntity
 {
     /**
-     * @ORM\ManyToOne(targetEntity="App\Database\Entities\MailChimp\MailChimpList", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="App\Database\Entities\MailChimp\MailChimpList", fetch="EAGER", cascade={"persist"})
      * @ORM\JoinColumn(name="list_id", referencedColumnName="id")
      */
     private $mailChimpList;
@@ -40,7 +40,7 @@ class MailChimpMember extends MailChimpEntity
     private $listId;
 
     /**
-     * @ORM\Column(name="mail_chimp_id", type="string")
+     * @ORM\Column(name="mail_chimp_id", type="string", nullable=true)
      *
      * @var string
      */

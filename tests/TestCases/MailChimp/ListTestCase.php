@@ -58,6 +58,17 @@ abstract class ListTestCase extends WithDatabaseTestCase
         'visibility'
     ];
 
+
+    /**
+     * Dummy data for list member
+     * @var array
+     */
+    protected static $memberData = [
+        'email_address' => 'johndoe@doe.com',
+        'email_type' => 'html',
+        'status' => 'unsubscribed'
+    ];
+
     /**
      * Call MailChimp to delete lists created during test.
      *
