@@ -6,6 +6,7 @@ namespace App\Http\Controllers\MailChimp;
 use App\Database\Entities\MailChimp\MailChimpList;
 use App\Database\Entities\MailChimp\MailChimpMember;
 use App\Http\Controllers\Controller;
+use App\Services\MemberService;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -15,20 +16,21 @@ use Mailchimp\Mailchimp;
 class MemberController extends Controller
 {
     /**
-     * @var \Mailchimp\Mailchimp
+     * @var MemberService
+     * Service for MailChimpMember logic
      */
-    private $mailChimp;
+    private $memberService;
 
     /**
      * MemberController constructor.
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     * @param \Mailchimp\Mailchimp $mailchimp
+     * @param MemberService $memberService
      */
-    public function __construct(EntityManagerInterface $entityManager, Mailchimp $mailchimp)
+    public function __construct(EntityManagerInterface $entityManager, MemberService $memberService)
     {
         parent::__construct($entityManager);
 
-        $this->mailChimp = $mailchimp;
+        $this->memberService = $memberService;
     }
 
     /**
@@ -64,8 +66,7 @@ class MemberController extends Controller
             $mailChimpList = $member->getMailChimpList();
 
             // Save member into MailChimp
-            $mailChimpResource = 'lists/'.$mailChimpList->getMailChimpId().'/members';
-            $response = $this->mailChimp->post($mailChimpResource, $member->toMailChimpArray());
+            $response = $this->memberService->saveInMailChimp($mailChimpList, $member);
 
             // Set MailChimp id on the member and save member into db
             $this->saveEntity($member->setMailChimpId($response->get('id')));
@@ -136,10 +137,8 @@ class MemberController extends Controller
             $this->saveEntity($memberEntity);
 
             // Update member into MailChimp
-            $emailHash = md5($member->getEmailAddress());
-            $mailChimpResource = 'lists/'.$member->getMailChimpList()->getMailChimpId().'/members/'.$emailHash;
+            $this->memberService->updateInMailChimp($memberEntity);
 
-            $this->mailChimp->patch($mailChimpResource, $member->toMailChimpArray());
         } catch (Exception $exception) {
             return $this->errorResponse(['message' => $exception->getMessage()]);
         }
@@ -169,17 +168,16 @@ class MemberController extends Controller
             // Remove member from database
             /** @var MailChimpMember $member */
             $this->removeEntity($member);
+
             // Remove member from MailChimp
-            $emailHash = md5($member->getEmailAddress());
-            $mailChimpResource = 'lists/'.$member->getMailChimpList()->getMailChimpId().'/members/'.$emailHash;
-            $this->mailChimp->delete($mailChimpResource);
+            $this->memberService->deleteInMailChimp($member);
+
         } catch (Exception $exception) {
             return $this->errorResponse(['message' => $exception->getMessage()]);
         }
 
         return $this->successfulResponse([]);
     }
-
 
 
 }

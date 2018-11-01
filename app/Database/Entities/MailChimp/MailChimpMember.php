@@ -97,10 +97,11 @@ class MailChimpMember extends MailChimpEntity
 
     /**
      * @param string $emailAddress
+     * Email Address should in lower case for MailChimp API
      */
     public function setEmailAddress(string $emailAddress): void
     {
-        $this->emailAddress = $emailAddress;
+        $this->emailAddress = strtolower($emailAddress);
     }
 
     /**
