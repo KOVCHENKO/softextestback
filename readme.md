@@ -1,9 +1,17 @@
 # Test Task
 
+## Some comments to solution
+Due to the fact that I have never used Doctrine ORM and MailChimp API, I collide with some difficulties:
+1. I made some migrations for DB and only then realized that Doctrine can make it itself. So I removed migrations from the project.
+2. It took me some time to deal with MailChimp API, but it is quite clear and simple. It took approx - 2 hours to get familiar with API and package for framework.
+3. Doctrine ORM is not so easy as Eloquent ORM, but it is similar to Java EE ORM's - It took approx - 4 hours to understand "relations", "Entity Manager" etc.
+4. Other operations and logic took approx 2 hours.   
+
+## Context
+
 This project is the code base of the PHP Test Task. 
 It is based on a really simple version of [Laravel Lumen][2].
 
-## Context
 This test task requires you to implement a new feature into an existing RESTful API.
 
 The API is built to interact with [MailChimp via their API][3], handling CRUD operations for [LISTS][4] and [MEMBERS][5].
