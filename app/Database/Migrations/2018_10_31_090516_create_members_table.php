@@ -24,6 +24,7 @@ class CreateMembersTable extends Migration
             $table->string('vip')->nullable();
             $table->text('location')->nullable();
             $table->string('list_id');
+            $table->string('mail_chimp_id');
             $table->timestamps();
         });
     }

@@ -29,7 +29,6 @@ abstract class Entity
     public function fill(array $data): self
     {
         $str = new Str();
-//        dd($data['email_type_option']);
 
         foreach ($data ?? [] as $property => $value) {
             $setter = \sprintf('set%s', $str->studly($property));

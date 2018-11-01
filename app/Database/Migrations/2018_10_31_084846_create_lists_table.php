@@ -18,7 +18,7 @@ class CreateListsTable extends Migration
             $table->text('campaign_defaults');
             $table->text('contact');
             $table->string('email_type_option');
-            $table->string('mail_chimp_id');
+            $table->string('mail_chimp_id')->nullable();
             $table->string('name');
             $table->string('notify_on_subscribe')->nullable();
             $table->string('notify_on_unsubscribe')->nullable();

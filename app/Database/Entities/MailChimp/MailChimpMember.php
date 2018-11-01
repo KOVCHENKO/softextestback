@@ -11,6 +11,12 @@ use EoneoPay\Utils\Str;
 class MailChimpMember extends MailChimpEntity
 {
     /**
+     * @ORM\ManyToOne(targetEntity="App\Database\Entities\MailChimp\MailChimpList", fetch="EAGER")
+     * @ORM\JoinColumn(name="list_id", referencedColumnName="id")
+     */
+    private $mailChimpList;
+
+    /**
      * @ORM\Id()
      * @ORM\Column(name="id", type="guid")
      * @ORM\GeneratedValue(strategy="UUID")
@@ -34,6 +40,13 @@ class MailChimpMember extends MailChimpEntity
     private $listId;
 
     /**
+     * @ORM\Column(name="mail_chimp_id", type="string")
+     *
+     * @var string
+     */
+    private $mailChimpId;
+
+    /**
      * @ORM\Column(name="email_type", type="string")
      *
      * @var string
@@ -46,6 +59,41 @@ class MailChimpMember extends MailChimpEntity
      * @var string
      */
     private $status;
+
+    /**
+     * @return mixed
+     */
+    public function getMailChimpList()
+    {
+        return $this->mailChimpList;
+    }
+
+    /**
+     * Get id.
+     *
+     * @return null|string
+     */
+    public function getId(): ?string
+    {
+        return $this->memberId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmailAddress(): string
+    {
+        return $this->emailAddress;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMailChimpId(): string
+    {
+        return $this->mailChimpId;
+    }
+
 
     /**
      * @param string $emailAddress
@@ -87,6 +135,24 @@ class MailChimpMember extends MailChimpEntity
         $this->listId = $listId;
     }
 
+    /**
+     * @param string $mailChimpId
+     * @return MailChimpMember
+     */
+    public function setMailChimpId(string $mailChimpId): MailChimpMember
+    {
+        $this->mailChimpId = $mailChimpId;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $mailChimpList
+     */
+    public function setMailChimpList($mailChimpList): void
+    {
+        $this->mailChimpList = $mailChimpList;
+    }
 
     /**
      * Get validation rules for mailchimp entity.
